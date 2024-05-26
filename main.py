@@ -11,44 +11,47 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Number Pad")
 
 # Define colors
-WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
-GREY = (200, 200, 200)
-GREEN = (0, 255, 0)
+GREY = (100, 100, 100)
+ORANGE = (255, 165, 0)
+WHITE = (255, 255, 255)
 RED = (255, 0, 0)
+GREEN = (0, 255, 0)
 
 # Define button properties
-button_width = 125
-button_height = 125
+button_width = 140
+button_height = 140
 margin = 10
-middle_distance = WIDTH/2 -button_width-margin-button_width/2
+middle_distance = WIDTH / 2 - button_width - button_width / 2
 
-# Define font
+# Define fonts
 font = pygame.font.Font(None, 48)
+clicked_numbers_font_size = 72 
+large_font = pygame.font.Font(None, clicked_numbers_font_size)
 
 # Predefined code and max length
 correct_code = "1234"
-max_length = 4
+max_length = len(correct_code)
 
 # Initial vertical offset for button pad
 vertical_offset = button_height + margin
 
-
 # Add submit button
-submit_button = {'label': 'Submit', 'pos': (middle_distance+2 * button_width + 3 * margin, 3 * button_height + 4 * margin + vertical_offset)}
+submit_button = {'label': 'Submit', 'pos': (middle_distance + 2 * button_width + 2 * margin, 3 * button_height + 4 * margin + vertical_offset)}
+
 # Define button positions and labels
 buttons = [
-    {'label': '1', 'pos': (margin+middle_distance, margin + vertical_offset)},
-    {'label': '2', 'pos': (middle_distance+button_width + 2 * margin, margin + vertical_offset)},
-    {'label': '3', 'pos': (middle_distance+2 * button_width + 3 * margin, margin + vertical_offset)},
-    {'label': '4', 'pos': (middle_distance+margin, button_height + 2 * margin + vertical_offset)},
-    {'label': '5', 'pos': (middle_distance+button_width + 2 * margin, button_height + 2 * margin + vertical_offset)},
-    {'label': '6', 'pos': (middle_distance+2 * button_width + 3 * margin, button_height + 2 * margin + vertical_offset)},
-    {'label': '7', 'pos': (middle_distance+margin, 2 * button_height + 3 * margin + vertical_offset)},
-    {'label': '8', 'pos': (middle_distance+button_width + 2 * margin, 2 * button_height + 3 * margin + vertical_offset)},
-    {'label': '9', 'pos': (middle_distance+2 * button_width + 3 * margin, 2 * button_height + 3 * margin + vertical_offset)},
-    {'label': '0', 'pos': (middle_distance+button_width + margin + margin, 3 * button_height + 4 * margin + vertical_offset)},
-    {'label': 'Delete', 'pos': (middle_distance+margin, 3 * button_height + 4 * margin + vertical_offset)},
+    {'label': '1', 'pos': (middle_distance, margin + vertical_offset)},
+    {'label': '2', 'pos': (middle_distance + button_width + margin, margin + vertical_offset)},
+    {'label': '3', 'pos': (middle_distance + 2 * button_width + 2 * margin, margin + vertical_offset)},
+    {'label': '4', 'pos': (middle_distance, button_height + 2*margin + vertical_offset)},
+    {'label': '5', 'pos': (middle_distance + button_width + margin, button_height + 2 * margin + vertical_offset)},
+    {'label': '6', 'pos': (middle_distance + 2 * button_width + 2 * margin, button_height + 2 * margin + vertical_offset)},
+    {'label': '7', 'pos': (middle_distance, 2 * button_height + 3 * margin + vertical_offset)},
+    {'label': '8', 'pos': (middle_distance + button_width + margin, 2 * button_height + 3 * margin + vertical_offset)},
+    {'label': '9', 'pos': (middle_distance + 2 * button_width + 2 * margin, 2 * button_height + 3 * margin + vertical_offset)},
+    {'label': '0', 'pos': (middle_distance + button_width + margin, 3 * button_height + 4 * margin + vertical_offset)},
+    {'label': 'Delete', 'pos': (middle_distance, 3 * button_height + 4 * margin + vertical_offset)},
     submit_button
 ]
 
@@ -58,19 +61,21 @@ unlocked = False
 incorrect = False
 incorrect_time = 0
 
-def draw_button(screen, label, pos, color=GREY):
+def draw_button(screen, label, pos, color=GREY, text_color=WHITE):
     rect = pygame.Rect(pos[0], pos[1], button_width, button_height)
-    pygame.draw.rect(screen, color, rect)
-    pygame.draw.rect(screen, BLACK, rect, 2)
-    text = font.render(label, True, BLACK)
+    pygame.draw.rect(screen, color, rect, border_radius=10)
+    text = font.render(label, True, text_color)
     text_rect = text.get_rect(center=rect.center)
     screen.blit(text, text_rect)
     return rect
 
+def draw_background(screen):
+    screen.fill(BLACK)
+
 # Main loop
 running = True
 while running:
-    screen.fill(WHITE)
+    draw_background(screen)
     
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -110,21 +115,21 @@ while running:
 
     if unlocked:
         unlocked_text = font.render("Unlocked", True, GREEN)
-        screen.blit(unlocked_text, (WIDTH // 2 - unlocked_text.get_width() // 2, HEIGHT // 2))
+        screen.blit(unlocked_text, (WIDTH / 2 - unlocked_text.get_width() / 2, HEIGHT / 2))
     else:
         for button in buttons:
             draw_button(screen, button['label'], button['pos'])
-        draw_button(screen, submit_button['label'], submit_button['pos'], color=RED)
+        draw_button(screen, submit_button['label'], submit_button['pos'], color=ORANGE)
 
         # Render the clicked numbers
-        clicked_text = font.render(clicked_numbers, True, BLACK)
-        screen.blit(clicked_text, (middle_distance+3*margin+button_width, margin*4))
+        clicked_text = large_font.render(clicked_numbers if len(clicked_numbers) == max_length else clicked_numbers + "_"*(max_length-len(clicked_numbers)), True, ORANGE)
+        screen.blit(clicked_text, (middle_distance + button_width+margin+button_width/2-(clicked_text.get_width()/2), margin * 8))
 
         # Show "Incorrect" message for a few seconds if the code is wrong
         if incorrect:
             incorrect_text = font.render("Incorrect", True, RED)
-            screen.blit(incorrect_text, (middle_distance+button_width, button_height-(2*margin)))
-            if time.time() - incorrect_time > 1:  # Show message for 2 seconds
+            screen.blit(incorrect_text, (middle_distance + button_width+margin+button_width/2-(incorrect_text.get_width()/2), incorrect_text.get_height() / 2))
+            if time.time() - incorrect_time > 2:  # Show message for 2 seconds
                 incorrect = False
 
     pygame.display.flip()
