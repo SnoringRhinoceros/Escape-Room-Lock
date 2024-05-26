@@ -6,7 +6,7 @@ import time
 pygame.init()
 
 # Screen dimensions
-WIDTH, HEIGHT = 500, 800
+WIDTH, HEIGHT = 500, 900
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Number Pad")
 
