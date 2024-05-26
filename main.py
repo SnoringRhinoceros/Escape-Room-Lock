@@ -18,9 +18,10 @@ GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 
 # Define button properties
-button_width = 100
-button_height = 100
+button_width = 125
+button_height = 125
 margin = 10
+middle_distance = WIDTH/2 -button_width-margin-button_width/2
 
 # Define font
 font = pygame.font.Font(None, 48)
@@ -34,20 +35,20 @@ vertical_offset = button_height + margin
 
 
 # Add submit button
-submit_button = {'label': 'Submit', 'pos': (2 * button_width + 3 * margin, 3 * button_height + 4 * margin + vertical_offset)}
+submit_button = {'label': 'Submit', 'pos': (middle_distance+2 * button_width + 3 * margin, 3 * button_height + 4 * margin + vertical_offset)}
 # Define button positions and labels
 buttons = [
-    {'label': '1', 'pos': (margin, margin + vertical_offset)},
-    {'label': '2', 'pos': (button_width + 2 * margin, margin + vertical_offset)},
-    {'label': '3', 'pos': (2 * button_width + 3 * margin, margin + vertical_offset)},
-    {'label': '4', 'pos': (margin, button_height + 2 * margin + vertical_offset)},
-    {'label': '5', 'pos': (button_width + 2 * margin, button_height + 2 * margin + vertical_offset)},
-    {'label': '6', 'pos': (2 * button_width + 3 * margin, button_height + 2 * margin + vertical_offset)},
-    {'label': '7', 'pos': (margin, 2 * button_height + 3 * margin + vertical_offset)},
-    {'label': '8', 'pos': (button_width + 2 * margin, 2 * button_height + 3 * margin + vertical_offset)},
-    {'label': '9', 'pos': (2 * button_width + 3 * margin, 2 * button_height + 3 * margin + vertical_offset)},
-    {'label': '0', 'pos': (button_width + margin + margin, 3 * button_height + 4 * margin + vertical_offset)},
-    {'label': 'Delete', 'pos': (margin, 3 * button_height + 4 * margin + vertical_offset)},
+    {'label': '1', 'pos': (margin+middle_distance, margin + vertical_offset)},
+    {'label': '2', 'pos': (middle_distance+button_width + 2 * margin, margin + vertical_offset)},
+    {'label': '3', 'pos': (middle_distance+2 * button_width + 3 * margin, margin + vertical_offset)},
+    {'label': '4', 'pos': (middle_distance+margin, button_height + 2 * margin + vertical_offset)},
+    {'label': '5', 'pos': (middle_distance+button_width + 2 * margin, button_height + 2 * margin + vertical_offset)},
+    {'label': '6', 'pos': (middle_distance+2 * button_width + 3 * margin, button_height + 2 * margin + vertical_offset)},
+    {'label': '7', 'pos': (middle_distance+margin, 2 * button_height + 3 * margin + vertical_offset)},
+    {'label': '8', 'pos': (middle_distance+button_width + 2 * margin, 2 * button_height + 3 * margin + vertical_offset)},
+    {'label': '9', 'pos': (middle_distance+2 * button_width + 3 * margin, 2 * button_height + 3 * margin + vertical_offset)},
+    {'label': '0', 'pos': (middle_distance+button_width + margin + margin, 3 * button_height + 4 * margin + vertical_offset)},
+    {'label': 'Delete', 'pos': (middle_distance+margin, 3 * button_height + 4 * margin + vertical_offset)},
     submit_button
 ]
 
@@ -117,12 +118,12 @@ while running:
 
         # Render the clicked numbers
         clicked_text = font.render(clicked_numbers, True, BLACK)
-        screen.blit(clicked_text, (margin+button_width, margin*3))
+        screen.blit(clicked_text, (middle_distance+3*margin+button_width, margin*4))
 
         # Show "Incorrect" message for a few seconds if the code is wrong
         if incorrect:
             incorrect_text = font.render("Incorrect", True, RED)
-            screen.blit(incorrect_text, (margin+button_width, button_height-(2*margin)))
+            screen.blit(incorrect_text, (middle_distance+button_width, button_height-(2*margin)))
             if time.time() - incorrect_time > 1:  # Show message for 2 seconds
                 incorrect = False
 
