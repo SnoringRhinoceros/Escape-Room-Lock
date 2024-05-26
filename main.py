@@ -6,7 +6,7 @@ import time
 pygame.init()
 
 # Screen dimensions
-WIDTH, HEIGHT = 500, 900
+WIDTH, HEIGHT = 1024, 768
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Number Pad")
 
@@ -97,7 +97,7 @@ while running:
             if event.unicode in '0123456789' and len(clicked_numbers) < max_length:
                 clicked_numbers += event.unicode
                 print(f"Key {event.unicode} pressed")
-            elif event.key == pygame.K_RETURN:  # Press Enter to submit
+            elif event.key == pygame.K_RETURN or event.key == pygame.K_KP_ENTER:  # Press Enter to submit
                 if clicked_numbers == correct_code:
                     unlocked = True
                 else:
