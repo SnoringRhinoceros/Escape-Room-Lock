@@ -28,7 +28,7 @@ middle_distance = WIDTH / 2 - button_width - button_width / 2
 font = pygame.font.Font(None, 48)
 clicked_numbers_font_size = 72 
 large_font = pygame.font.Font(None, clicked_numbers_font_size)
-full_screen_font = pygame.font.Font(500)
+full_screen_font = pygame.font.Font(None, 500)
 
 # Predefined code and max length
 correct_code = "1234"
