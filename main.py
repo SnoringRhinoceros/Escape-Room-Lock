@@ -28,6 +28,7 @@ middle_distance = WIDTH / 2 - button_width - button_width / 2
 font = pygame.font.Font(None, 48)
 clicked_numbers_font_size = 72 
 large_font = pygame.font.Font(None, clicked_numbers_font_size)
+full_screen_font = pygame.font.Font(500)
 
 # Predefined code and max length
 correct_code = "1234"
@@ -114,7 +115,7 @@ while running:
                 clicked_numbers = clicked_numbers[:-1]  # Remove last character
 
     if unlocked:
-        unlocked_text = font.render("Unlocked", True, GREEN)
+        unlocked_text = full_screen_font.render("Unlocked", True, GREEN)
         screen.blit(unlocked_text, (WIDTH / 2 - unlocked_text.get_width() / 2, HEIGHT / 2))
     else:
         for button in buttons:
